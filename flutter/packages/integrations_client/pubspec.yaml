@@ -1,0 +1,19 @@
+name: integrations_client
+description: Dart models and API clients for saratonin integrations
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  json_annotation: ^4.9.0
+  freezed_annotation: ^2.4.4
+  http: ^1.2.0
+
+dev_dependencies:
+  build_runner: ^2.4.13
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  test: ^1.25.0
+  lints: ^5.1.0

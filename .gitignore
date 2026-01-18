@@ -1,0 +1,17 @@
+# Rust
+target/
+Cargo.lock
+
+# Dart/Flutter
+.dart_tool/
+.packages
+pubspec.lock
+*.iml
+.idea/
+
+# Generated files (keep for now, they're needed for builds)
+# *.freezed.dart
+# *.g.dart
+
+# OS
+.DS_Store
