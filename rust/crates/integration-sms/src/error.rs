@@ -37,7 +37,7 @@ impl From<IntegrationError> for SmsError {
             IntegrationError::RateLimited { .. } => {
                 SmsError::RateLimited("Too many requests".to_string())
             }
-            IntegrationError::NotFound(msg) => SmsError::NotFound,
+            IntegrationError::NotFound(_) => SmsError::NotFound,
             IntegrationError::Config(msg) => SmsError::Config(msg),
             IntegrationError::Http(e) => SmsError::Network(e),
             other => SmsError::TwilioError(other.to_string()),

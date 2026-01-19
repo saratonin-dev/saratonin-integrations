@@ -4,7 +4,7 @@ use integration_core::HttpClientBuilder;
 use reqwest::Client;
 use tracing::{debug, info};
 
-use crate::{Machine, MachineError, PinballMapMachine, PinballMapResponse};
+use crate::{Machine, MachineError, PinballMapResponse};
 
 const PINBALL_MAP_BASE_URL: &str = "https://pinballmap.com/api/v1";
 

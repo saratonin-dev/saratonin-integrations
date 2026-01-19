@@ -1,4 +1,5 @@
 /// Pinball league data models.
+library;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -72,8 +73,12 @@ class LeagueOverview with _$LeagueOverview {
   const factory LeagueOverview({
     @JsonKey(name: 'active_series') Series? activeSeries,
     @Default([]) List<Standing> standings,
-    @JsonKey(name: 'recent_tournaments') @Default([]) List<Tournament> recentTournaments,
-    @JsonKey(name: 'upcoming_tournaments') @Default([]) List<Tournament> upcomingTournaments,
+    @JsonKey(name: 'recent_tournaments')
+    @Default([])
+    List<Tournament> recentTournaments,
+    @JsonKey(name: 'upcoming_tournaments')
+    @Default([])
+    List<Tournament> upcomingTournaments,
     @JsonKey(name: 'last_updated') DateTime? lastUpdated,
   }) = _LeagueOverview;
 
@@ -118,7 +123,9 @@ class PlayerProfile with _$PlayerProfile {
     @JsonKey(name: 'total_losses') @Default(0) int totalLosses,
     @JsonKey(name: 'win_rate') double? winRate,
     @JsonKey(name: 'best_finish') int? bestFinish,
-    @JsonKey(name: 'tournament_history') @Default([]) List<PlayerTournamentStats> tournamentHistory,
+    @JsonKey(name: 'tournament_history')
+    @Default([])
+    List<PlayerTournamentStats> tournamentHistory,
   }) = _PlayerProfile;
 
   factory PlayerProfile.fromJson(Map<String, dynamic> json) =>

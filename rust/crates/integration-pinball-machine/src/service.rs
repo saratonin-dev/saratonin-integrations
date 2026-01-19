@@ -94,14 +94,12 @@ impl MachineDataService {
                     opdb.lookup_by_opdb_id(opdb_id).await.ok().flatten()
                 } else if let Some(ipdb_link) = &machine.ipdb_link {
                     // Try to extract IPDB ID from link
-                    ipdb_link
+                    // TODO: Make this async-friendly - currently just returns None
+                    let _ipdb_id = ipdb_link
                         .split("id=")
                         .last()
-                        .and_then(|s| s.parse::<i64>().ok())
-                        .and_then(|id| {
-                            // This is sync access, need async
-                            None // TODO: Make this async-friendly
-                        })
+                        .and_then(|s| s.parse::<i64>().ok());
+                    None
                 } else {
                     None
                 };

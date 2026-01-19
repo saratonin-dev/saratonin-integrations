@@ -7,6 +7,10 @@ repository.workspace = true
 rust-version.workspace = true
 description = "Pinball machine data integration: Pinball Map, OPDB, and Pintips"
 
+[features]
+default = []
+preprocessor = []
+
 [dependencies]
 integration-core = { workspace = true }
 

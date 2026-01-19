@@ -1,4 +1,5 @@
 /// Authentication models.
+library;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -35,9 +36,7 @@ class AuthTokens with _$AuthTokens {
 /// Response after requesting OTP.
 @freezed
 class OtpResponse with _$OtpResponse {
-  const factory OtpResponse({
-    required String message,
-  }) = _OtpResponse;
+  const factory OtpResponse({required String message}) = _OtpResponse;
 
   factory OtpResponse.fromJson(Map<String, dynamic> json) =>
       _$OtpResponseFromJson(json);
@@ -59,10 +58,8 @@ class RefreshResponse with _$RefreshResponse {
 /// API error response.
 @freezed
 class ApiError with _$ApiError {
-  const factory ApiError({
-    required String error,
-    required String message,
-  }) = _ApiError;
+  const factory ApiError({required String error, required String message}) =
+      _ApiError;
 
   factory ApiError.fromJson(Map<String, dynamic> json) =>
       _$ApiErrorFromJson(json);
