@@ -1,0 +1,140 @@
+name: CI
+
+on:
+  repository_dispatch:
+    types: [core-updated]
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  rust:
+    name: Rust Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rust
+    steps:
+      - uses: actions/checkout@v4.1.1
+
+      # Checkout saratonin-core at the triggering commit (or develop)
+      - name: Checkout saratonin-core
+        uses: actions/checkout@v4.1.1
+        with:
+          repository: ${{ github.repository_owner }}/saratonin-core
+          ref: ${{ github.event.client_payload.ref || 'develop' }}
+          path: saratonin-core
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@1.83.0
+        with:
+          components: rustfmt, clippy
+
+      - name: Cache cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('rust/**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+      - name: Run tests
+        run: cargo test --workspace
+
+  flutter:
+    name: Flutter Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter/packages/integrations_client
+    steps:
+      - uses: actions/checkout@v4.1.1
+
+      # Checkout saratonin-core for Flutter packages
+      - name: Checkout saratonin-core
+        uses: actions/checkout@v4.1.1
+        with:
+          repository: ${{ github.repository_owner }}/saratonin-core
+          ref: ${{ github.event.client_payload.ref || 'develop' }}
+          path: saratonin-core
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.1'
+          channel: 'stable'
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
+  # Trigger dependent app tests when integrations changes
+  trigger-dependents:
+    name: Test Dependent Apps
+    needs: [rust, flutter]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    strategy:
+      fail-fast: false
+      matrix:
+        repo: [bangback-app]
+    steps:
+      - name: Trigger ${{ matrix.repo }} tests
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: ${{ github.repository_owner }}/${{ matrix.repo }}
+          event-type: integrations-updated
+          client-payload: |
+            {
+              "ref": "${{ github.event.pull_request.head.sha || github.sha }}",
+              "pr_number": "${{ github.event.pull_request.number }}",
+              "source": "saratonin-integrations"
+            }
+
+  # Report back to core PR if triggered by repository_dispatch
+  report-status:
+    name: Report Status
+    needs: [rust, flutter]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'repository_dispatch'
+    steps:
+      - name: Report success to triggering PR
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          script: |
+            const { owner } = context.repo;
+            const source = '${{ github.event.client_payload.source }}';
+            const prNumber = '${{ github.event.client_payload.pr_number }}';
+
+            if (prNumber) {
+              await github.rest.issues.createComment({
+                owner,
+                repo: source,
+                issue_number: parseInt(prNumber),
+                body: `✅ **saratonin-integrations** tests passed against this PR's changes.`
+              });
+            }
