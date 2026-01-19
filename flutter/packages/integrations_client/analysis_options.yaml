@@ -1,5 +1,10 @@
 include: package:lints/recommended.yaml
 
+analyzer:
+  errors:
+    # @JsonKey on freezed constructor params is valid - freezed generates the fields
+    invalid_annotation_target: ignore
+
 linter:
   rules:
     prefer_const_constructors: true
