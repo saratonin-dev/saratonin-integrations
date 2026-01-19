@@ -35,7 +35,11 @@ pub trait OtpService: Send + Sync {
     async fn start_verification(&self, phone: &str) -> Result<(), SmsError>;
 
     /// Check if the provided code matches the pending verification.
-    async fn check_verification(&self, phone: &str, code: &str) -> Result<VerificationStatus, SmsError>;
+    async fn check_verification(
+        &self,
+        phone: &str,
+        code: &str,
+    ) -> Result<VerificationStatus, SmsError>;
 }
 
 #[cfg(test)]
@@ -50,15 +54,24 @@ mod tests {
         service.start_verification("+15551234567").await.unwrap();
 
         // Wrong code should fail
-        let status = service.check_verification("+15551234567", "000000").await.unwrap();
+        let status = service
+            .check_verification("+15551234567", "000000")
+            .await
+            .unwrap();
         assert_eq!(status, VerificationStatus::Pending);
 
         // Correct code should succeed
-        let status = service.check_verification("+15551234567", "123456").await.unwrap();
+        let status = service
+            .check_verification("+15551234567", "123456")
+            .await
+            .unwrap();
         assert_eq!(status, VerificationStatus::Approved);
 
         // Subsequent check should fail (code consumed)
-        let status = service.check_verification("+15551234567", "123456").await.unwrap();
+        let status = service
+            .check_verification("+15551234567", "123456")
+            .await
+            .unwrap();
         assert!(matches!(status, VerificationStatus::Failed(_)));
     }
 
@@ -67,7 +80,10 @@ mod tests {
         let service = MockOtpService::new();
 
         // Check without starting should fail
-        let status = service.check_verification("+15551234567", "123456").await.unwrap();
+        let status = service
+            .check_verification("+15551234567", "123456")
+            .await
+            .unwrap();
         assert!(matches!(status, VerificationStatus::Failed(_)));
     }
 }

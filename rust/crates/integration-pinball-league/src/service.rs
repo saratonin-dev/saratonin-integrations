@@ -91,7 +91,8 @@ impl LeagueDataService {
         }
 
         let series = self.client.get_series().await?;
-        self.series_cache.insert("series".to_string(), series.clone());
+        self.series_cache
+            .insert("series".to_string(), series.clone());
         Ok(series)
     }
 
@@ -121,7 +122,10 @@ impl LeagueDataService {
     }
 
     /// Get series standings.
-    pub async fn get_series_standings(&self, _series_id: i64) -> Result<Vec<Standing>, LeagueError> {
+    pub async fn get_series_standings(
+        &self,
+        _series_id: i64,
+    ) -> Result<Vec<Standing>, LeagueError> {
         // Note: Matchplay API doesn't have direct series standings endpoint
         // Would need to aggregate from tournament results
         // For now, return empty

@@ -139,7 +139,10 @@ impl MatchplayClient {
             .map(Tournament::from)
             .collect();
 
-        info!(count = tournaments.len(), "Fetched tournaments from Matchplay");
+        info!(
+            count = tournaments.len(),
+            "Fetched tournaments from Matchplay"
+        );
         Ok(tournaments)
     }
 

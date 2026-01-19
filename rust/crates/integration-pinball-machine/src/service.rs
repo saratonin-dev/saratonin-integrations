@@ -111,7 +111,11 @@ impl MachineDataService {
                     enriched_count += 1;
                 }
             }
-            info!(enriched_count, total = machines.len(), "Enriched machines with OPDB data");
+            info!(
+                enriched_count,
+                total = machines.len(),
+                "Enriched machines with OPDB data"
+            );
         }
 
         // Add Pintips
@@ -125,7 +129,11 @@ impl MachineDataService {
                     }
                 }
             }
-            info!(tips_count, total = machines.len(), "Added Pintips to machines");
+            info!(
+                tips_count,
+                total = machines.len(),
+                "Added Pintips to machines"
+            );
         }
 
         // Cache the result

@@ -73,11 +73,7 @@ struct FcmNotification {
 
 #[async_trait]
 impl PushService for FcmPushService {
-    async fn send(
-        &self,
-        device_token: &str,
-        notification: &Notification,
-    ) -> Result<(), PushError> {
+    async fn send(&self, device_token: &str, notification: &Notification) -> Result<(), PushError> {
         let url = "https://fcm.googleapis.com/fcm/send";
 
         let message = FcmMessage {

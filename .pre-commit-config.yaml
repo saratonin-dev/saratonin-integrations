@@ -1,0 +1,63 @@
+# Pre-commit hooks matching CI checks
+# Install: pip install pre-commit && pre-commit install
+# Run manually: pre-commit run --all-files
+
+repos:
+  # Rust formatting and linting (rust/)
+  - repo: local
+    hooks:
+      - id: cargo-fmt
+        name: cargo fmt
+        entry: bash -c 'cd rust && cargo fmt --all -- --check'
+        language: system
+        types: [rust]
+        pass_filenames: false
+
+      - id: cargo-clippy
+        name: cargo clippy
+        entry: bash -c 'cd rust && cargo clippy --workspace --all-targets -- -D warnings'
+        language: system
+        types: [rust]
+        pass_filenames: false
+
+      - id: cargo-test
+        name: cargo test
+        entry: bash -c 'cd rust && cargo test --workspace'
+        language: system
+        types: [rust]
+        pass_filenames: false
+        stages: [pre-push]
+
+  # Flutter/Dart formatting and analysis (flutter/packages/integrations_client/)
+  - repo: local
+    hooks:
+      - id: dart-format
+        name: dart format
+        entry: dart format --set-exit-if-changed
+        language: system
+        types: [dart]
+
+      - id: flutter-analyze
+        name: flutter analyze
+        entry: bash -c 'cd flutter/packages/integrations_client && flutter analyze'
+        language: system
+        types: [dart]
+        pass_filenames: false
+
+      - id: flutter-test
+        name: flutter test
+        entry: bash -c 'cd flutter/packages/integrations_client && flutter test'
+        language: system
+        types: [dart]
+        pass_filenames: false
+        stages: [pre-push]
+
+  # General checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: check-merge-conflict

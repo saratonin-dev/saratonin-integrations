@@ -92,11 +92,7 @@ impl Notification {
 #[async_trait]
 pub trait PushService: Send + Sync {
     /// Send a notification to a device.
-    async fn send(
-        &self,
-        device_token: &str,
-        notification: &Notification,
-    ) -> Result<(), PushError>;
+    async fn send(&self, device_token: &str, notification: &Notification) -> Result<(), PushError>;
 
     /// Send a notification to multiple devices.
     async fn send_batch(
@@ -120,7 +116,10 @@ pub mod notifications {
     pub fn order_ready(order_id: &str) -> Notification {
         Notification::new(
             "Your Order is Ready!",
-            format!("Order #{} is ready for pickup", &order_id[..8.min(order_id.len())]),
+            format!(
+                "Order #{} is ready for pickup",
+                &order_id[..8.min(order_id.len())]
+            ),
         )
         .with_data(serde_json::json!({
             "type": "order_ready",

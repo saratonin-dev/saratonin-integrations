@@ -63,10 +63,7 @@ impl ToastPosService {
 #[async_trait]
 impl PosService for ToastPosService {
     async fn get_menu(&self) -> Result<Menu, PosError> {
-        let url = format!(
-            "{}/menus/v2/menus",
-            self.config.api_base_url
-        );
+        let url = format!("{}/menus/v2/menus", self.config.api_base_url);
 
         let response = self
             .client
@@ -90,7 +87,10 @@ impl PosService for ToastPosService {
             .await
             .map_err(|e| PosError::ParseError(format!("Failed to parse menu: {}", e)))?;
 
-        info!("Toast: Retrieved menu with {} categories", menu.categories.len());
+        info!(
+            "Toast: Retrieved menu with {} categories",
+            menu.categories.len()
+        );
         Ok(menu)
     }
 
@@ -111,10 +111,7 @@ impl PosService for ToastPosService {
     }
 
     async fn submit_order(&self, order: &OrderSubmission) -> Result<String, PosError> {
-        let url = format!(
-            "{}/orders/v2/orders",
-            self.config.api_base_url
-        );
+        let url = format!("{}/orders/v2/orders", self.config.api_base_url);
 
         let response = self
             .client

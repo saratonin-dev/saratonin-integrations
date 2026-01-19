@@ -29,7 +29,7 @@ pub use error::MachineError;
 pub use models::*;
 pub use opdb::{OpdbLoader, OpdbMachine};
 pub use pinball_map::{PinballMapClient, PinballMapConfig};
-pub use pintips::{PintipsLoader, Pintips, TipsSection};
+pub use pintips::{Pintips, PintipsLoader, TipsSection};
 pub use service::MachineDataService;
 
 #[cfg(test)]

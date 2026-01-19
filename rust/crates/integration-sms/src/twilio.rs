@@ -104,7 +104,11 @@ impl OtpService for TwilioOtpService {
         Ok(())
     }
 
-    async fn check_verification(&self, phone: &str, code: &str) -> Result<VerificationStatus, SmsError> {
+    async fn check_verification(
+        &self,
+        phone: &str,
+        code: &str,
+    ) -> Result<VerificationStatus, SmsError> {
         let url = format!(
             "https://verify.twilio.com/v2/Services/{}/VerificationCheck",
             self.config.verify_service_sid
@@ -142,10 +146,9 @@ impl OtpService for TwilioOtpService {
             )));
         }
 
-        let body: TwilioVerificationResponse = response
-            .json()
-            .await
-            .map_err(|e| SmsError::TwilioError(format!("Failed to parse Twilio response: {}", e)))?;
+        let body: TwilioVerificationResponse = response.json().await.map_err(|e| {
+            SmsError::TwilioError(format!("Failed to parse Twilio response: {}", e))
+        })?;
 
         match body.status.as_str() {
             "approved" => {
