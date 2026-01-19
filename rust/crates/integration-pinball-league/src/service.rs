@@ -69,7 +69,7 @@ impl LeagueDataService {
 
         let mut upcoming_tournaments: Vec<_> = tournaments
             .iter()
-            .filter(|t| t.status == "active" || t.status == "scheduled")
+            .filter(|t| t.status == "active" || t.status == "planned")
             .cloned()
             .collect();
         upcoming_tournaments.sort_by(|a, b| a.started_at.cmp(&b.started_at));

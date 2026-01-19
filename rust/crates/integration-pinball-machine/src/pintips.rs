@@ -88,7 +88,14 @@ impl PintipsLoader {
     }
 
     /// Get tips for a machine by OPDB ID.
+    ///
+    /// Lazily loads all pintips on first access if cache is empty.
     pub fn get(&self, opdb_id: &str) -> Option<Pintips> {
+        // Lazy load on first access if cache is empty
+        if self.cache.read().is_empty() && self.data_dir.exists() {
+            self.load_all_sync();
+        }
+
         let cache = self.cache.read();
 
         // Try exact match first
@@ -99,6 +106,29 @@ impl PintipsLoader {
         // Try base ID (without suffix)
         let base_id = opdb_id.split('-').next().unwrap_or(opdb_id);
         cache.get(base_id).cloned()
+    }
+
+    /// Synchronously load all pintips (for lazy initialization).
+    fn load_all_sync(&self) {
+        if let Ok(entries) = std::fs::read_dir(&self.data_dir) {
+            let mut cache = self.cache.write();
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.extension().map(|e| e == "json").unwrap_or(false) {
+                    if let Ok(content) = std::fs::read_to_string(&path) {
+                        match serde_json::from_str::<Pintips>(&content) {
+                            Ok(tips) => {
+                                cache.insert(tips.opdb_id.clone(), tips);
+                            }
+                            Err(e) => {
+                                tracing::warn!(path = ?path, error = %e, "Failed to parse pintips file");
+                            }
+                        }
+                    }
+                }
+            }
+            info!(count = cache.len(), "Lazy-loaded pintips");
+        }
     }
 
     /// Get all loaded tips.
