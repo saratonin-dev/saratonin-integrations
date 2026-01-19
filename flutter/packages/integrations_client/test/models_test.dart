@@ -41,7 +41,7 @@ void main() {
           {'id': 'pm_1', 'name': 'Machine 1'},
           {'id': 'pm_2', 'name': 'Machine 2'},
         ],
-        'machineCount': 2,
+        'machine_count': 2,
       };
 
       final response = MachinesResponse.fromJson(json);
@@ -57,7 +57,7 @@ void main() {
         'id': 42,
         'name': 'Monday Night League',
         'status': 'active',
-        'playerCount': 16,
+        'player_count': 16,
       };
 
       final tournament = Tournament.fromJson(json);
@@ -71,8 +71,8 @@ void main() {
     test('Standing.fromJson parses correctly', () {
       final json = {
         'rank': 1,
-        'playerId': 123,
-        'playerName': 'John Doe',
+        'player_id': 123,
+        'player_name': 'John Doe',
         'points': 100.5,
         'wins': 10,
         'losses': 2,
@@ -90,10 +90,10 @@ void main() {
   group('Auth models', () {
     test('AuthTokens.fromJson parses correctly', () {
       final json = {
-        'accessToken': 'abc123',
-        'refreshToken': 'xyz789',
-        'expiresIn': 900,
-        'tokenType': 'Bearer',
+        'access_token': 'abc123',
+        'refresh_token': 'xyz789',
+        'expires_in': 900,
+        'token_type': 'Bearer',
       };
 
       final tokens = AuthTokens.fromJson(json);
@@ -108,8 +108,8 @@ void main() {
       final json = {
         'id': 'user-123',
         'phone': '+15551234567',
-        'isAdmin': false,
-        'createdAt': '2024-01-15T10:30:00.000Z',
+        'is_admin': false,
+        'created_at': '2024-01-15T10:30:00.000Z',
       };
 
       final user = User.fromJson(json);
@@ -124,8 +124,8 @@ void main() {
     test('LocalScore.fromJson parses correctly', () {
       final json = {
         'id': 'score-123',
-        'machineId': 'pm_456',
-        'playerName': 'Player One',
+        'machine_id': 'pm_456',
+        'player_name': 'Player One',
         'score': 1000000,
         'timestamp': '2024-01-15T10:30:00.000Z',
       };
