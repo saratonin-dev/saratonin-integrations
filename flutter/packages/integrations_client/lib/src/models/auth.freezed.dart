@@ -22,10 +22,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
 mixin _$User {
   String get id => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_admin')
-  bool get isAdmin => throw _privateConstructorUsedError;
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  List<String> get roles => throw _privateConstructorUsedError;
+  List<String> get permissions => throw _privateConstructorUsedError;
 
   /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,8 +43,9 @@ abstract class $UserCopyWith<$Res> {
   $Res call(
       {String id,
       String phone,
-      @JsonKey(name: 'is_admin') bool isAdmin,
-      @JsonKey(name: 'created_at') DateTime createdAt});
+      String? name,
+      List<String> roles,
+      List<String> permissions});
 }
 
 /// @nodoc
@@ -65,8 +65,9 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   $Res call({
     Object? id = null,
     Object? phone = null,
-    Object? isAdmin = null,
-    Object? createdAt = null,
+    Object? name = freezed,
+    Object? roles = null,
+    Object? permissions = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -77,14 +78,18 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      isAdmin: null == isAdmin
-          ? _value.isAdmin
-          : isAdmin // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      roles: null == roles
+          ? _value.roles
+          : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      permissions: null == permissions
+          ? _value.permissions
+          : permissions // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -99,8 +104,9 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   $Res call(
       {String id,
       String phone,
-      @JsonKey(name: 'is_admin') bool isAdmin,
-      @JsonKey(name: 'created_at') DateTime createdAt});
+      String? name,
+      List<String> roles,
+      List<String> permissions});
 }
 
 /// @nodoc
@@ -117,8 +123,9 @@ class __$$UserImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? phone = null,
-    Object? isAdmin = null,
-    Object? createdAt = null,
+    Object? name = freezed,
+    Object? roles = null,
+    Object? permissions = null,
   }) {
     return _then(_$UserImpl(
       id: null == id
@@ -129,26 +136,34 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      isAdmin: null == isAdmin
-          ? _value.isAdmin
-          : isAdmin // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      roles: null == roles
+          ? _value._roles
+          : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      permissions: null == permissions
+          ? _value._permissions
+          : permissions // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$UserImpl implements _User {
+class _$UserImpl extends _User {
   const _$UserImpl(
       {required this.id,
       required this.phone,
-      @JsonKey(name: 'is_admin') this.isAdmin = false,
-      @JsonKey(name: 'created_at') required this.createdAt});
+      this.name,
+      final List<String> roles = const [],
+      final List<String> permissions = const []})
+      : _roles = roles,
+        _permissions = permissions,
+        super._();
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -158,15 +173,28 @@ class _$UserImpl implements _User {
   @override
   final String phone;
   @override
-  @JsonKey(name: 'is_admin')
-  final bool isAdmin;
+  final String? name;
+  final List<String> _roles;
   @override
-  @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  @JsonKey()
+  List<String> get roles {
+    if (_roles is EqualUnmodifiableListView) return _roles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_roles);
+  }
+
+  final List<String> _permissions;
+  @override
+  @JsonKey()
+  List<String> get permissions {
+    if (_permissions is EqualUnmodifiableListView) return _permissions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_permissions);
+  }
 
   @override
   String toString() {
-    return 'User(id: $id, phone: $phone, isAdmin: $isAdmin, createdAt: $createdAt)';
+    return 'User(id: $id, phone: $phone, name: $name, roles: $roles, permissions: $permissions)';
   }
 
   @override
@@ -176,14 +204,21 @@ class _$UserImpl implements _User {
             other is _$UserImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(other._roles, _roles) &&
+            const DeepCollectionEquality()
+                .equals(other._permissions, _permissions));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, phone, isAdmin, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      phone,
+      name,
+      const DeepCollectionEquality().hash(_roles),
+      const DeepCollectionEquality().hash(_permissions));
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -201,13 +236,14 @@ class _$UserImpl implements _User {
   }
 }
 
-abstract class _User implements User {
+abstract class _User extends User {
   const factory _User(
-          {required final String id,
-          required final String phone,
-          @JsonKey(name: 'is_admin') final bool isAdmin,
-          @JsonKey(name: 'created_at') required final DateTime createdAt}) =
-      _$UserImpl;
+      {required final String id,
+      required final String phone,
+      final String? name,
+      final List<String> roles,
+      final List<String> permissions}) = _$UserImpl;
+  const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -216,11 +252,11 @@ abstract class _User implements User {
   @override
   String get phone;
   @override
-  @JsonKey(name: 'is_admin')
-  bool get isAdmin;
+  String? get name;
   @override
-  @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  List<String> get roles;
+  @override
+  List<String> get permissions;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

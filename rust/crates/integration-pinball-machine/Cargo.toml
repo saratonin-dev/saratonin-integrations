@@ -24,6 +24,8 @@ tracing = { workspace = true }
 async-trait = { workspace = true }
 dashmap = { workspace = true }
 parking_lot = { workspace = true }
+sqlx = { workspace = true }
+uuid = { workspace = true }
 
 [dev-dependencies]
 tokio-test = { workspace = true }

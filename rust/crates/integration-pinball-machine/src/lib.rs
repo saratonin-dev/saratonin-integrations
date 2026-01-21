@@ -19,6 +19,7 @@
 //! ```
 
 mod error;
+pub mod favorites;
 mod models;
 mod opdb;
 mod pinball_map;
@@ -26,11 +27,12 @@ mod pintips;
 mod service;
 
 pub use error::MachineError;
+pub use favorites::{FavoriteInfo, MachineFavorite, MachineWithFavorites};
 pub use models::*;
 pub use opdb::{OpdbLoader, OpdbMachine};
 pub use pinball_map::{PinballMapClient, PinballMapConfig};
 pub use pintips::{Pintips, PintipsLoader, TipsSection};
-pub use service::MachineDataService;
+pub use service::{MachineDataService, MachinesWithFavoritesResponse};
 
 #[cfg(test)]
 mod tests {
