@@ -11,11 +11,36 @@ class User with _$User {
   const factory User({
     required String id,
     required String phone,
-    @JsonKey(name: 'is_admin') @Default(false) bool isAdmin,
+    @Default([]) List<String> roles,
     @JsonKey(name: 'created_at') required DateTime createdAt,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+}
+
+/// Team member representation.
+@freezed
+class TeamMember with _$TeamMember {
+  const factory TeamMember({
+    required String id,
+    required String phone,
+    @Default([]) List<String> roles,
+    @JsonKey(name: 'joined_at') required DateTime joinedAt,
+  }) = _TeamMember;
+
+  factory TeamMember.fromJson(Map<String, dynamic> json) =>
+      _$TeamMemberFromJson(json);
+}
+
+/// Request to update user roles.
+@freezed
+class UpdateRolesRequest with _$UpdateRolesRequest {
+  const factory UpdateRolesRequest({
+    required List<String> roles,
+  }) = _UpdateRolesRequest;
+
+  factory UpdateRolesRequest.fromJson(Map<String, dynamic> json) =>
+      _$UpdateRolesRequestFromJson(json);
 }
 
 /// Authentication tokens response.
