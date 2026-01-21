@@ -6,17 +6,36 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'auth.freezed.dart';
 part 'auth.g.dart';
 
-/// User profile.
+/// User profile with RBAC support.
 @freezed
 class User with _$User {
+  const User._();
+
   const factory User({
     required String id,
     required String phone,
-    @JsonKey(name: 'is_admin') @Default(false) bool isAdmin,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
+    String? name,
+    @Default([]) List<String> roles,
+    @Default([]) List<String> permissions,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  /// Check if user has a specific permission.
+  /// Admin role automatically has all permissions.
+  bool hasPermission(String permission) {
+    if (hasRole('admin')) return true;
+    return permissions.contains(permission);
+  }
+
+  /// Check if user has a specific role.
+  bool hasRole(String role) => roles.contains(role);
+
+  /// Check if user is an admin.
+  bool get isAdmin => hasRole('admin');
+
+  /// Check if user can favorite machines.
+  bool get canFavorite => hasPermission('machines:favorite');
 }
 
 /// Authentication tokens response.

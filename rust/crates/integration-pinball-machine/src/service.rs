@@ -1,22 +1,34 @@
 //! Unified machine data service.
 
+use std::collections::HashMap;
 use std::sync::Arc;
 use std::time::Duration;
 
 use chrono::Utc;
 use integration_core::Cache;
+use sqlx::PgPool;
 use tracing::info;
+use uuid::Uuid;
 
 use crate::{
-    Machine, MachineError, MachinesResponse, OpdbLoader, PinballMapClient, PinballMapConfig,
-    PintipsLoader,
+    FavoriteInfo, Machine, MachineError, MachineWithFavorites, MachinesResponse, OpdbLoader,
+    PinballMapClient, PinballMapConfig, PintipsLoader, favorites,
 };
+
+/// Response with machines and favorites.
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct MachinesWithFavoritesResponse {
+    pub machines: Vec<MachineWithFavorites>,
+    pub machine_count: usize,
+    pub last_synced: Option<chrono::DateTime<Utc>>,
+}
 
 /// Unified service for machine data from multiple sources.
 pub struct MachineDataService {
     pinball_map: PinballMapClient,
     opdb: Option<Arc<OpdbLoader>>,
     pintips: Option<Arc<PintipsLoader>>,
+    db_pool: Option<PgPool>,
     cache: Cache<Vec<Machine>>,
     cache_key: String,
 }
@@ -31,6 +43,7 @@ impl MachineDataService {
             pinball_map,
             opdb: None,
             pintips: None,
+            db_pool: None,
             cache: Cache::new(Duration::from_secs(30 * 60)), // 30 minute cache
             cache_key: format!("machines_{}", location_id),
         })
@@ -49,6 +62,7 @@ impl MachineDataService {
             pinball_map,
             opdb: None,
             pintips: None,
+            db_pool: None,
             cache: Cache::new(Duration::from_secs(30 * 60)),
             cache_key: format!("machines_{}", location_id),
         })
@@ -63,6 +77,12 @@ impl MachineDataService {
     /// Add Pintips data.
     pub fn with_pintips(mut self, loader: Arc<PintipsLoader>) -> Self {
         self.pintips = Some(loader);
+        self
+    }
+
+    /// Add database pool for favorites support.
+    pub fn with_database(mut self, pool: PgPool) -> Self {
+        self.db_pool = Some(pool);
         self
     }
 
@@ -167,5 +187,103 @@ impl MachineDataService {
 
         // Get fresh data
         self.get_machines().await
+    }
+
+    /// Get machines with favorites enrichment.
+    pub async fn get_machines_with_favorites(
+        &self,
+        tenant_id: &str,
+    ) -> Result<MachinesWithFavoritesResponse, MachineError> {
+        let response = self.get_machines().await?;
+
+        let favorites_by_machine = if let Some(ref pool) = self.db_pool {
+            let all_favorites = favorites::get_all_favorites(pool, tenant_id).await?;
+            let mut map: HashMap<String, Vec<FavoriteInfo>> = HashMap::new();
+            for fav in all_favorites {
+                map.entry(fav.machine_id.clone())
+                    .or_default()
+                    .push(FavoriteInfo::from(fav));
+            }
+            map
+        } else {
+            HashMap::new()
+        };
+
+        let machines_with_favorites: Vec<MachineWithFavorites> = response
+            .machines
+            .into_iter()
+            .map(|machine| {
+                let favorites = favorites_by_machine
+                    .get(&machine.id)
+                    .cloned()
+                    .unwrap_or_default();
+                MachineWithFavorites::new(machine, favorites)
+            })
+            .collect();
+
+        Ok(MachinesWithFavoritesResponse {
+            machine_count: machines_with_favorites.len(),
+            machines: machines_with_favorites,
+            last_synced: response.last_synced,
+        })
+    }
+
+    /// Get a single machine with favorites.
+    pub async fn get_machine_with_favorites(
+        &self,
+        id: &str,
+        tenant_id: &str,
+    ) -> Result<Option<MachineWithFavorites>, MachineError> {
+        let machine = match self.get_machine(id).await? {
+            Some(m) => m,
+            None => return Ok(None),
+        };
+
+        let favorites = if let Some(ref pool) = self.db_pool {
+            let fav_records = favorites::get_machine_favorites(pool, id, tenant_id).await?;
+            fav_records.into_iter().map(FavoriteInfo::from).collect()
+        } else {
+            Vec::new()
+        };
+
+        Ok(Some(MachineWithFavorites::new(machine, favorites)))
+    }
+
+    /// Set a user's favorite machine (replaces any previous favorite).
+    pub async fn set_favorite(
+        &self,
+        user_id: Uuid,
+        user_name: Option<&str>,
+        machine_id: &str,
+        tenant_id: &str,
+    ) -> Result<(), MachineError> {
+        let pool = self.db_pool.as_ref().ok_or_else(|| {
+            MachineError::Database("Database not configured for favorites".into())
+        })?;
+
+        favorites::set_favorite(pool, user_id, user_name, machine_id, tenant_id).await
+    }
+
+    /// Clear a user's favorite.
+    pub async fn clear_favorite(&self, user_id: Uuid, tenant_id: &str) -> Result<(), MachineError> {
+        let pool = self.db_pool.as_ref().ok_or_else(|| {
+            MachineError::Database("Database not configured for favorites".into())
+        })?;
+
+        favorites::clear_favorite(pool, user_id, tenant_id).await
+    }
+
+    /// Get a user's current favorite machine ID.
+    pub async fn get_user_favorite(
+        &self,
+        user_id: Uuid,
+        tenant_id: &str,
+    ) -> Result<Option<String>, MachineError> {
+        let pool = self.db_pool.as_ref().ok_or_else(|| {
+            MachineError::Database("Database not configured for favorites".into())
+        })?;
+
+        let fav = favorites::get_user_favorite(pool, user_id, tenant_id).await?;
+        Ok(fav.map(|f| f.machine_id))
     }
 }

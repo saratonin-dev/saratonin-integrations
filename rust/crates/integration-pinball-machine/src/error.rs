@@ -36,4 +36,8 @@ pub enum MachineError {
     /// IO error.
     #[error("IO error: {0}")]
     Io(#[from] std::io::Error),
+
+    /// Database error.
+    #[error("Database error: {0}")]
+    Database(String),
 }
