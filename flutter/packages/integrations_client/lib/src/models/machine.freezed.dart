@@ -1421,3 +1421,777 @@ abstract class _MachinesResponse implements MachinesResponse {
   _$$MachinesResponseImplCopyWith<_$MachinesResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+MachineWithFavorites _$MachineWithFavoritesFromJson(Map<String, dynamic> json) {
+  return _MachineWithFavorites.fromJson(json);
+}
+
+/// @nodoc
+mixin _$MachineWithFavorites {
+  /// Unique identifier.
+  String get id => throw _privateConstructorUsedError;
+
+  /// Machine name.
+  String get name => throw _privateConstructorUsedError;
+
+  /// Manufacturer.
+  String? get manufacturer => throw _privateConstructorUsedError;
+
+  /// Year of manufacture.
+  int? get year => throw _privateConstructorUsedError;
+
+  /// IPDB link.
+  @JsonKey(name: 'ipdb_link')
+  String? get ipdbLink => throw _privateConstructorUsedError;
+
+  /// OPDB ID.
+  @JsonKey(name: 'opdb_id')
+  String? get opdbId => throw _privateConstructorUsedError;
+
+  /// Machine type.
+  @JsonKey(name: 'machine_type')
+  String? get machineType => throw _privateConstructorUsedError;
+
+  /// Display type.
+  @JsonKey(name: 'display_type')
+  String? get displayType => throw _privateConstructorUsedError;
+
+  /// Number of players.
+  @JsonKey(name: 'player_count')
+  int? get playerCount => throw _privateConstructorUsedError;
+
+  /// Features.
+  List<String> get features => throw _privateConstructorUsedError;
+
+  /// Description.
+  String? get description => throw _privateConstructorUsedError;
+
+  /// Images.
+  List<MachineImage> get images => throw _privateConstructorUsedError;
+
+  /// Strategy tips.
+  Pintips? get tips => throw _privateConstructorUsedError;
+
+  /// Number of users who favorited this machine.
+  @JsonKey(name: 'favorite_count')
+  int get favoriteCount => throw _privateConstructorUsedError;
+
+  /// Serializes this MachineWithFavorites to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of MachineWithFavorites
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $MachineWithFavoritesCopyWith<MachineWithFavorites> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MachineWithFavoritesCopyWith<$Res> {
+  factory $MachineWithFavoritesCopyWith(MachineWithFavorites value,
+          $Res Function(MachineWithFavorites) then) =
+      _$MachineWithFavoritesCopyWithImpl<$Res, MachineWithFavorites>;
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      String? manufacturer,
+      int? year,
+      @JsonKey(name: 'ipdb_link') String? ipdbLink,
+      @JsonKey(name: 'opdb_id') String? opdbId,
+      @JsonKey(name: 'machine_type') String? machineType,
+      @JsonKey(name: 'display_type') String? displayType,
+      @JsonKey(name: 'player_count') int? playerCount,
+      List<String> features,
+      String? description,
+      List<MachineImage> images,
+      Pintips? tips,
+      @JsonKey(name: 'favorite_count') int favoriteCount});
+
+  $PintipsCopyWith<$Res>? get tips;
+}
+
+/// @nodoc
+class _$MachineWithFavoritesCopyWithImpl<$Res,
+        $Val extends MachineWithFavorites>
+    implements $MachineWithFavoritesCopyWith<$Res> {
+  _$MachineWithFavoritesCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of MachineWithFavorites
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? manufacturer = freezed,
+    Object? year = freezed,
+    Object? ipdbLink = freezed,
+    Object? opdbId = freezed,
+    Object? machineType = freezed,
+    Object? displayType = freezed,
+    Object? playerCount = freezed,
+    Object? features = null,
+    Object? description = freezed,
+    Object? images = null,
+    Object? tips = freezed,
+    Object? favoriteCount = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      manufacturer: freezed == manufacturer
+          ? _value.manufacturer
+          : manufacturer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      year: freezed == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ipdbLink: freezed == ipdbLink
+          ? _value.ipdbLink
+          : ipdbLink // ignore: cast_nullable_to_non_nullable
+              as String?,
+      opdbId: freezed == opdbId
+          ? _value.opdbId
+          : opdbId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      machineType: freezed == machineType
+          ? _value.machineType
+          : machineType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      displayType: freezed == displayType
+          ? _value.displayType
+          : displayType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      playerCount: freezed == playerCount
+          ? _value.playerCount
+          : playerCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      features: null == features
+          ? _value.features
+          : features // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      images: null == images
+          ? _value.images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<MachineImage>,
+      tips: freezed == tips
+          ? _value.tips
+          : tips // ignore: cast_nullable_to_non_nullable
+              as Pintips?,
+      favoriteCount: null == favoriteCount
+          ? _value.favoriteCount
+          : favoriteCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+
+  /// Create a copy of MachineWithFavorites
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PintipsCopyWith<$Res>? get tips {
+    if (_value.tips == null) {
+      return null;
+    }
+
+    return $PintipsCopyWith<$Res>(_value.tips!, (value) {
+      return _then(_value.copyWith(tips: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$MachineWithFavoritesImplCopyWith<$Res>
+    implements $MachineWithFavoritesCopyWith<$Res> {
+  factory _$$MachineWithFavoritesImplCopyWith(_$MachineWithFavoritesImpl value,
+          $Res Function(_$MachineWithFavoritesImpl) then) =
+      __$$MachineWithFavoritesImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String name,
+      String? manufacturer,
+      int? year,
+      @JsonKey(name: 'ipdb_link') String? ipdbLink,
+      @JsonKey(name: 'opdb_id') String? opdbId,
+      @JsonKey(name: 'machine_type') String? machineType,
+      @JsonKey(name: 'display_type') String? displayType,
+      @JsonKey(name: 'player_count') int? playerCount,
+      List<String> features,
+      String? description,
+      List<MachineImage> images,
+      Pintips? tips,
+      @JsonKey(name: 'favorite_count') int favoriteCount});
+
+  @override
+  $PintipsCopyWith<$Res>? get tips;
+}
+
+/// @nodoc
+class __$$MachineWithFavoritesImplCopyWithImpl<$Res>
+    extends _$MachineWithFavoritesCopyWithImpl<$Res, _$MachineWithFavoritesImpl>
+    implements _$$MachineWithFavoritesImplCopyWith<$Res> {
+  __$$MachineWithFavoritesImplCopyWithImpl(_$MachineWithFavoritesImpl _value,
+      $Res Function(_$MachineWithFavoritesImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MachineWithFavorites
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? manufacturer = freezed,
+    Object? year = freezed,
+    Object? ipdbLink = freezed,
+    Object? opdbId = freezed,
+    Object? machineType = freezed,
+    Object? displayType = freezed,
+    Object? playerCount = freezed,
+    Object? features = null,
+    Object? description = freezed,
+    Object? images = null,
+    Object? tips = freezed,
+    Object? favoriteCount = null,
+  }) {
+    return _then(_$MachineWithFavoritesImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      manufacturer: freezed == manufacturer
+          ? _value.manufacturer
+          : manufacturer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      year: freezed == year
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ipdbLink: freezed == ipdbLink
+          ? _value.ipdbLink
+          : ipdbLink // ignore: cast_nullable_to_non_nullable
+              as String?,
+      opdbId: freezed == opdbId
+          ? _value.opdbId
+          : opdbId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      machineType: freezed == machineType
+          ? _value.machineType
+          : machineType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      displayType: freezed == displayType
+          ? _value.displayType
+          : displayType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      playerCount: freezed == playerCount
+          ? _value.playerCount
+          : playerCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      features: null == features
+          ? _value._features
+          : features // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      images: null == images
+          ? _value._images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<MachineImage>,
+      tips: freezed == tips
+          ? _value.tips
+          : tips // ignore: cast_nullable_to_non_nullable
+              as Pintips?,
+      favoriteCount: null == favoriteCount
+          ? _value.favoriteCount
+          : favoriteCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$MachineWithFavoritesImpl implements _MachineWithFavorites {
+  const _$MachineWithFavoritesImpl(
+      {required this.id,
+      required this.name,
+      this.manufacturer,
+      this.year,
+      @JsonKey(name: 'ipdb_link') this.ipdbLink,
+      @JsonKey(name: 'opdb_id') this.opdbId,
+      @JsonKey(name: 'machine_type') this.machineType,
+      @JsonKey(name: 'display_type') this.displayType,
+      @JsonKey(name: 'player_count') this.playerCount,
+      final List<String> features = const [],
+      this.description,
+      final List<MachineImage> images = const [],
+      this.tips,
+      @JsonKey(name: 'favorite_count') this.favoriteCount = 0})
+      : _features = features,
+        _images = images;
+
+  factory _$MachineWithFavoritesImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MachineWithFavoritesImplFromJson(json);
+
+  /// Unique identifier.
+  @override
+  final String id;
+
+  /// Machine name.
+  @override
+  final String name;
+
+  /// Manufacturer.
+  @override
+  final String? manufacturer;
+
+  /// Year of manufacture.
+  @override
+  final int? year;
+
+  /// IPDB link.
+  @override
+  @JsonKey(name: 'ipdb_link')
+  final String? ipdbLink;
+
+  /// OPDB ID.
+  @override
+  @JsonKey(name: 'opdb_id')
+  final String? opdbId;
+
+  /// Machine type.
+  @override
+  @JsonKey(name: 'machine_type')
+  final String? machineType;
+
+  /// Display type.
+  @override
+  @JsonKey(name: 'display_type')
+  final String? displayType;
+
+  /// Number of players.
+  @override
+  @JsonKey(name: 'player_count')
+  final int? playerCount;
+
+  /// Features.
+  final List<String> _features;
+
+  /// Features.
+  @override
+  @JsonKey()
+  List<String> get features {
+    if (_features is EqualUnmodifiableListView) return _features;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_features);
+  }
+
+  /// Description.
+  @override
+  final String? description;
+
+  /// Images.
+  final List<MachineImage> _images;
+
+  /// Images.
+  @override
+  @JsonKey()
+  List<MachineImage> get images {
+    if (_images is EqualUnmodifiableListView) return _images;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_images);
+  }
+
+  /// Strategy tips.
+  @override
+  final Pintips? tips;
+
+  /// Number of users who favorited this machine.
+  @override
+  @JsonKey(name: 'favorite_count')
+  final int favoriteCount;
+
+  @override
+  String toString() {
+    return 'MachineWithFavorites(id: $id, name: $name, manufacturer: $manufacturer, year: $year, ipdbLink: $ipdbLink, opdbId: $opdbId, machineType: $machineType, displayType: $displayType, playerCount: $playerCount, features: $features, description: $description, images: $images, tips: $tips, favoriteCount: $favoriteCount)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MachineWithFavoritesImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.manufacturer, manufacturer) ||
+                other.manufacturer == manufacturer) &&
+            (identical(other.year, year) || other.year == year) &&
+            (identical(other.ipdbLink, ipdbLink) ||
+                other.ipdbLink == ipdbLink) &&
+            (identical(other.opdbId, opdbId) || other.opdbId == opdbId) &&
+            (identical(other.machineType, machineType) ||
+                other.machineType == machineType) &&
+            (identical(other.displayType, displayType) ||
+                other.displayType == displayType) &&
+            (identical(other.playerCount, playerCount) ||
+                other.playerCount == playerCount) &&
+            const DeepCollectionEquality().equals(other._features, _features) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            const DeepCollectionEquality().equals(other._images, _images) &&
+            (identical(other.tips, tips) || other.tips == tips) &&
+            (identical(other.favoriteCount, favoriteCount) ||
+                other.favoriteCount == favoriteCount));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      manufacturer,
+      year,
+      ipdbLink,
+      opdbId,
+      machineType,
+      displayType,
+      playerCount,
+      const DeepCollectionEquality().hash(_features),
+      description,
+      const DeepCollectionEquality().hash(_images),
+      tips,
+      favoriteCount);
+
+  /// Create a copy of MachineWithFavorites
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MachineWithFavoritesImplCopyWith<_$MachineWithFavoritesImpl>
+      get copyWith =>
+          __$$MachineWithFavoritesImplCopyWithImpl<_$MachineWithFavoritesImpl>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MachineWithFavoritesImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _MachineWithFavorites implements MachineWithFavorites {
+  const factory _MachineWithFavorites(
+          {required final String id,
+          required final String name,
+          final String? manufacturer,
+          final int? year,
+          @JsonKey(name: 'ipdb_link') final String? ipdbLink,
+          @JsonKey(name: 'opdb_id') final String? opdbId,
+          @JsonKey(name: 'machine_type') final String? machineType,
+          @JsonKey(name: 'display_type') final String? displayType,
+          @JsonKey(name: 'player_count') final int? playerCount,
+          final List<String> features,
+          final String? description,
+          final List<MachineImage> images,
+          final Pintips? tips,
+          @JsonKey(name: 'favorite_count') final int favoriteCount}) =
+      _$MachineWithFavoritesImpl;
+
+  factory _MachineWithFavorites.fromJson(Map<String, dynamic> json) =
+      _$MachineWithFavoritesImpl.fromJson;
+
+  /// Unique identifier.
+  @override
+  String get id;
+
+  /// Machine name.
+  @override
+  String get name;
+
+  /// Manufacturer.
+  @override
+  String? get manufacturer;
+
+  /// Year of manufacture.
+  @override
+  int? get year;
+
+  /// IPDB link.
+  @override
+  @JsonKey(name: 'ipdb_link')
+  String? get ipdbLink;
+
+  /// OPDB ID.
+  @override
+  @JsonKey(name: 'opdb_id')
+  String? get opdbId;
+
+  /// Machine type.
+  @override
+  @JsonKey(name: 'machine_type')
+  String? get machineType;
+
+  /// Display type.
+  @override
+  @JsonKey(name: 'display_type')
+  String? get displayType;
+
+  /// Number of players.
+  @override
+  @JsonKey(name: 'player_count')
+  int? get playerCount;
+
+  /// Features.
+  @override
+  List<String> get features;
+
+  /// Description.
+  @override
+  String? get description;
+
+  /// Images.
+  @override
+  List<MachineImage> get images;
+
+  /// Strategy tips.
+  @override
+  Pintips? get tips;
+
+  /// Number of users who favorited this machine.
+  @override
+  @JsonKey(name: 'favorite_count')
+  int get favoriteCount;
+
+  /// Create a copy of MachineWithFavorites
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MachineWithFavoritesImplCopyWith<_$MachineWithFavoritesImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+MachinesWithFavoritesResponse _$MachinesWithFavoritesResponseFromJson(
+    Map<String, dynamic> json) {
+  return _MachinesWithFavoritesResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$MachinesWithFavoritesResponse {
+  List<MachineWithFavorites> get machines => throw _privateConstructorUsedError;
+  @JsonKey(name: 'machine_count')
+  int get machineCount => throw _privateConstructorUsedError;
+
+  /// Serializes this MachinesWithFavoritesResponse to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of MachinesWithFavoritesResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $MachinesWithFavoritesResponseCopyWith<MachinesWithFavoritesResponse>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MachinesWithFavoritesResponseCopyWith<$Res> {
+  factory $MachinesWithFavoritesResponseCopyWith(
+          MachinesWithFavoritesResponse value,
+          $Res Function(MachinesWithFavoritesResponse) then) =
+      _$MachinesWithFavoritesResponseCopyWithImpl<$Res,
+          MachinesWithFavoritesResponse>;
+  @useResult
+  $Res call(
+      {List<MachineWithFavorites> machines,
+      @JsonKey(name: 'machine_count') int machineCount});
+}
+
+/// @nodoc
+class _$MachinesWithFavoritesResponseCopyWithImpl<$Res,
+        $Val extends MachinesWithFavoritesResponse>
+    implements $MachinesWithFavoritesResponseCopyWith<$Res> {
+  _$MachinesWithFavoritesResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of MachinesWithFavoritesResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? machines = null,
+    Object? machineCount = null,
+  }) {
+    return _then(_value.copyWith(
+      machines: null == machines
+          ? _value.machines
+          : machines // ignore: cast_nullable_to_non_nullable
+              as List<MachineWithFavorites>,
+      machineCount: null == machineCount
+          ? _value.machineCount
+          : machineCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$MachinesWithFavoritesResponseImplCopyWith<$Res>
+    implements $MachinesWithFavoritesResponseCopyWith<$Res> {
+  factory _$$MachinesWithFavoritesResponseImplCopyWith(
+          _$MachinesWithFavoritesResponseImpl value,
+          $Res Function(_$MachinesWithFavoritesResponseImpl) then) =
+      __$$MachinesWithFavoritesResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<MachineWithFavorites> machines,
+      @JsonKey(name: 'machine_count') int machineCount});
+}
+
+/// @nodoc
+class __$$MachinesWithFavoritesResponseImplCopyWithImpl<$Res>
+    extends _$MachinesWithFavoritesResponseCopyWithImpl<$Res,
+        _$MachinesWithFavoritesResponseImpl>
+    implements _$$MachinesWithFavoritesResponseImplCopyWith<$Res> {
+  __$$MachinesWithFavoritesResponseImplCopyWithImpl(
+      _$MachinesWithFavoritesResponseImpl _value,
+      $Res Function(_$MachinesWithFavoritesResponseImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of MachinesWithFavoritesResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? machines = null,
+    Object? machineCount = null,
+  }) {
+    return _then(_$MachinesWithFavoritesResponseImpl(
+      machines: null == machines
+          ? _value._machines
+          : machines // ignore: cast_nullable_to_non_nullable
+              as List<MachineWithFavorites>,
+      machineCount: null == machineCount
+          ? _value.machineCount
+          : machineCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$MachinesWithFavoritesResponseImpl
+    implements _MachinesWithFavoritesResponse {
+  const _$MachinesWithFavoritesResponseImpl(
+      {required final List<MachineWithFavorites> machines,
+      @JsonKey(name: 'machine_count') required this.machineCount})
+      : _machines = machines;
+
+  factory _$MachinesWithFavoritesResponseImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$MachinesWithFavoritesResponseImplFromJson(json);
+
+  final List<MachineWithFavorites> _machines;
+  @override
+  List<MachineWithFavorites> get machines {
+    if (_machines is EqualUnmodifiableListView) return _machines;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_machines);
+  }
+
+  @override
+  @JsonKey(name: 'machine_count')
+  final int machineCount;
+
+  @override
+  String toString() {
+    return 'MachinesWithFavoritesResponse(machines: $machines, machineCount: $machineCount)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MachinesWithFavoritesResponseImpl &&
+            const DeepCollectionEquality().equals(other._machines, _machines) &&
+            (identical(other.machineCount, machineCount) ||
+                other.machineCount == machineCount));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_machines), machineCount);
+
+  /// Create a copy of MachinesWithFavoritesResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MachinesWithFavoritesResponseImplCopyWith<
+          _$MachinesWithFavoritesResponseImpl>
+      get copyWith => __$$MachinesWithFavoritesResponseImplCopyWithImpl<
+          _$MachinesWithFavoritesResponseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MachinesWithFavoritesResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _MachinesWithFavoritesResponse
+    implements MachinesWithFavoritesResponse {
+  const factory _MachinesWithFavoritesResponse(
+          {required final List<MachineWithFavorites> machines,
+          @JsonKey(name: 'machine_count') required final int machineCount}) =
+      _$MachinesWithFavoritesResponseImpl;
+
+  factory _MachinesWithFavoritesResponse.fromJson(Map<String, dynamic> json) =
+      _$MachinesWithFavoritesResponseImpl.fromJson;
+
+  @override
+  List<MachineWithFavorites> get machines;
+  @override
+  @JsonKey(name: 'machine_count')
+  int get machineCount;
+
+  /// Create a copy of MachinesWithFavoritesResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$MachinesWithFavoritesResponseImplCopyWith<
+          _$MachinesWithFavoritesResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}

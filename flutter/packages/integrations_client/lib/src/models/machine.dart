@@ -115,3 +115,66 @@ class MachinesResponse with _$MachinesResponse {
   factory MachinesResponse.fromJson(Map<String, dynamic> json) =>
       _$MachinesResponseFromJson(json);
 }
+
+/// A machine with favorite count information.
+@freezed
+class MachineWithFavorites with _$MachineWithFavorites {
+  const factory MachineWithFavorites({
+    /// Unique identifier.
+    required String id,
+
+    /// Machine name.
+    required String name,
+
+    /// Manufacturer.
+    String? manufacturer,
+
+    /// Year of manufacture.
+    int? year,
+
+    /// IPDB link.
+    @JsonKey(name: 'ipdb_link') String? ipdbLink,
+
+    /// OPDB ID.
+    @JsonKey(name: 'opdb_id') String? opdbId,
+
+    /// Machine type.
+    @JsonKey(name: 'machine_type') String? machineType,
+
+    /// Display type.
+    @JsonKey(name: 'display_type') String? displayType,
+
+    /// Number of players.
+    @JsonKey(name: 'player_count') int? playerCount,
+
+    /// Features.
+    @Default([]) List<String> features,
+
+    /// Description.
+    String? description,
+
+    /// Images.
+    @Default([]) List<MachineImage> images,
+
+    /// Strategy tips.
+    Pintips? tips,
+
+    /// Number of users who favorited this machine.
+    @JsonKey(name: 'favorite_count') @Default(0) int favoriteCount,
+  }) = _MachineWithFavorites;
+
+  factory MachineWithFavorites.fromJson(Map<String, dynamic> json) =>
+      _$MachineWithFavoritesFromJson(json);
+}
+
+/// Response containing multiple machines with favorites.
+@freezed
+class MachinesWithFavoritesResponse with _$MachinesWithFavoritesResponse {
+  const factory MachinesWithFavoritesResponse({
+    required List<MachineWithFavorites> machines,
+    @JsonKey(name: 'machine_count') required int machineCount,
+  }) = _MachinesWithFavoritesResponse;
+
+  factory MachinesWithFavoritesResponse.fromJson(Map<String, dynamic> json) =>
+      _$MachinesWithFavoritesResponseFromJson(json);
+}
