@@ -1,11 +1,12 @@
 /// Authentication models.
+library;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth.freezed.dart';
 part 'auth.g.dart';
 
-/// User profile.
+/// User profile with RBAC support.
 @freezed
 class User with _$User {
   const User._();
@@ -16,38 +17,25 @@ class User with _$User {
     String? name,
     @Default([]) List<String> roles,
     @Default([]) List<String> permissions,
-    @JsonKey(name: 'created_at') required DateTime createdAt,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-  /// Whether the user can favorite machines.
-  bool get canFavorite => permissions.contains('machines:favorite');
-}
+  /// Check if user has a specific permission.
+  /// Admin role automatically has all permissions.
+  bool hasPermission(String permission) {
+    if (hasRole('admin')) return true;
+    return permissions.contains(permission);
+  }
 
-/// Team member representation.
-@freezed
-class TeamMember with _$TeamMember {
-  const factory TeamMember({
-    required String id,
-    required String phone,
-    @Default([]) List<String> roles,
-    @JsonKey(name: 'joined_at') required DateTime joinedAt,
-  }) = _TeamMember;
+  /// Check if user has a specific role.
+  bool hasRole(String role) => roles.contains(role);
 
-  factory TeamMember.fromJson(Map<String, dynamic> json) =>
-      _$TeamMemberFromJson(json);
-}
+  /// Check if user is an admin.
+  bool get isAdmin => hasRole('admin');
 
-/// Request to update user roles.
-@freezed
-class UpdateRolesRequest with _$UpdateRolesRequest {
-  const factory UpdateRolesRequest({
-    required List<String> roles,
-  }) = _UpdateRolesRequest;
-
-  factory UpdateRolesRequest.fromJson(Map<String, dynamic> json) =>
-      _$UpdateRolesRequestFromJson(json);
+  /// Check if user can favorite machines.
+  bool get canFavorite => hasPermission('machines:favorite');
 }
 
 /// Authentication tokens response.
@@ -67,9 +55,7 @@ class AuthTokens with _$AuthTokens {
 /// Response after requesting OTP.
 @freezed
 class OtpResponse with _$OtpResponse {
-  const factory OtpResponse({
-    required String message,
-  }) = _OtpResponse;
+  const factory OtpResponse({required String message}) = _OtpResponse;
 
   factory OtpResponse.fromJson(Map<String, dynamic> json) =>
       _$OtpResponseFromJson(json);
@@ -91,10 +77,8 @@ class RefreshResponse with _$RefreshResponse {
 /// API error response.
 @freezed
 class ApiError with _$ApiError {
-  const factory ApiError({
-    required String error,
-    required String message,
-  }) = _ApiError;
+  const factory ApiError({required String error, required String message}) =
+      _ApiError;
 
   factory ApiError.fromJson(Map<String, dynamic> json) =>
       _$ApiErrorFromJson(json);

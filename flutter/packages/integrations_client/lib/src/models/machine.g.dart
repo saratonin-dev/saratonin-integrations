@@ -123,11 +123,13 @@ Map<String, dynamic> _$$MachinesResponseImplToJson(
 
 _$FavoriteInfoImpl _$$FavoriteInfoImplFromJson(Map<String, dynamic> json) =>
     _$FavoriteInfoImpl(
+      userId: json['user_id'] as String?,
       userName: json['user_name'] as String?,
     );
 
 Map<String, dynamic> _$$FavoriteInfoImplToJson(_$FavoriteInfoImpl instance) =>
     <String, dynamic>{
+      'user_id': instance.userId,
       'user_name': instance.userName,
     };
 

@@ -16,6 +16,7 @@ jobs:
   rust:
     name: Rust Tests
     runs-on: ubuntu-latest
+    environment: saratonin-staging
     defaults:
       run:
         working-directory: rust
@@ -32,7 +33,7 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@1.85.0
+        uses: dtolnay/rust-toolchain@nightly
         with:
           components: rustfmt, clippy
 
@@ -59,6 +60,7 @@ jobs:
   flutter:
     name: Flutter Tests
     runs-on: ubuntu-latest
+    environment: saratonin-staging
     defaults:
       run:
         working-directory: flutter/packages/integrations_client
@@ -95,6 +97,7 @@ jobs:
     name: Test Dependent Apps
     needs: [rust, flutter]
     runs-on: ubuntu-latest
+    environment: saratonin-staging
     if: github.event_name == 'pull_request'
     strategy:
       fail-fast: false
@@ -119,6 +122,7 @@ jobs:
     name: Report Status
     needs: [rust, flutter]
     runs-on: ubuntu-latest
+    environment: saratonin-staging
     if: github.event_name == 'repository_dispatch'
     steps:
       - name: Report success to triggering PR

@@ -17,7 +17,6 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
               ?.map((e) => e as String)
               .toList() ??
           const [],
-      createdAt: DateTime.parse(json['created_at'] as String),
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -27,37 +26,6 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'name': instance.name,
       'roles': instance.roles,
       'permissions': instance.permissions,
-      'created_at': instance.createdAt.toIso8601String(),
-    };
-
-_$TeamMemberImpl _$$TeamMemberImplFromJson(Map<String, dynamic> json) =>
-    _$TeamMemberImpl(
-      id: json['id'] as String,
-      phone: json['phone'] as String,
-      roles:
-          (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-              const [],
-      joinedAt: DateTime.parse(json['joined_at'] as String),
-    );
-
-Map<String, dynamic> _$$TeamMemberImplToJson(_$TeamMemberImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'phone': instance.phone,
-      'roles': instance.roles,
-      'joined_at': instance.joinedAt.toIso8601String(),
-    };
-
-_$UpdateRolesRequestImpl _$$UpdateRolesRequestImplFromJson(
-        Map<String, dynamic> json) =>
-    _$UpdateRolesRequestImpl(
-      roles: (json['roles'] as List<dynamic>).map((e) => e as String).toList(),
-    );
-
-Map<String, dynamic> _$$UpdateRolesRequestImplToJson(
-        _$UpdateRolesRequestImpl instance) =>
-    <String, dynamic>{
-      'roles': instance.roles,
     };
 
 _$AuthTokensImpl _$$AuthTokensImplFromJson(Map<String, dynamic> json) =>

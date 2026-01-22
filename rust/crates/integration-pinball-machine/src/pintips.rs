@@ -56,6 +56,7 @@ impl PintipsLoader {
     }
 
     /// Load all pintips from the data directory.
+    #[allow(clippy::await_holding_lock)]
     pub async fn load_all(&self) -> Result<usize, MachineError> {
         let mut cache = self.cache.write();
         cache.clear();
@@ -152,11 +153,13 @@ impl PintipsLoader {
 /// processor.process_all("data/pintips")?;
 /// ```
 #[cfg(feature = "preprocessor")]
+#[allow(dead_code)]
 pub struct PintipsPreprocessor {
     repo_dir: PathBuf,
 }
 
 #[cfg(feature = "preprocessor")]
+#[allow(dead_code)]
 impl PintipsPreprocessor {
     /// Create a new preprocessor.
     pub fn new(repo_dir: impl Into<PathBuf>) -> Self {
@@ -166,7 +169,7 @@ impl PintipsPreprocessor {
     }
 
     /// Process all HTML files and write JSON output.
-    pub fn process_all(&self, output_dir: impl Into<PathBuf>) -> Result<usize, MachineError> {
+    pub fn process_all(&self, _output_dir: impl Into<PathBuf>) -> Result<usize, MachineError> {
         // This would use the `scraper` crate to parse HTML
         // For now, we expect pre-processed JSON files
         todo!("HTML preprocessing should be done via CLI tool")

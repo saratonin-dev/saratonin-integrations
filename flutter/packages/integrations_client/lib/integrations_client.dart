@@ -5,7 +5,7 @@
 /// - [Tournament], [Standing], [LeagueOverview] for leagues
 /// - [AuthTokens], [User] for authentication
 /// - [LocalScore] for local high scores
-library integrations_client;
+library;
 
 // Machine models
 export 'src/models/machine.dart';

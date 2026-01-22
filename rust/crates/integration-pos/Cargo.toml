@@ -10,6 +10,7 @@ description = "Point of Sale integration via Toast API"
 [dependencies]
 integration-core = { workspace = true }
 
+uuid = { workspace = true }
 tokio = { workspace = true }
 reqwest = { workspace = true }
 serde = { workspace = true }

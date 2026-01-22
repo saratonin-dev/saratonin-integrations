@@ -1428,7 +1428,8 @@ FavoriteInfo _$FavoriteInfoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FavoriteInfo {
-  /// The user's display name.
+  @JsonKey(name: 'user_id')
+  String? get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_name')
   String? get userName => throw _privateConstructorUsedError;
 
@@ -1448,7 +1449,9 @@ abstract class $FavoriteInfoCopyWith<$Res> {
           FavoriteInfo value, $Res Function(FavoriteInfo) then) =
       _$FavoriteInfoCopyWithImpl<$Res, FavoriteInfo>;
   @useResult
-  $Res call({@JsonKey(name: 'user_name') String? userName});
+  $Res call(
+      {@JsonKey(name: 'user_id') String? userId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -1466,9 +1469,14 @@ class _$FavoriteInfoCopyWithImpl<$Res, $Val extends FavoriteInfo>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = freezed,
     Object? userName = freezed,
   }) {
     return _then(_value.copyWith(
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -1485,7 +1493,9 @@ abstract class _$$FavoriteInfoImplCopyWith<$Res>
       __$$FavoriteInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: 'user_name') String? userName});
+  $Res call(
+      {@JsonKey(name: 'user_id') String? userId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -1501,9 +1511,14 @@ class __$$FavoriteInfoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? userId = freezed,
     Object? userName = freezed,
   }) {
     return _then(_$FavoriteInfoImpl(
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -1515,19 +1530,23 @@ class __$$FavoriteInfoImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$FavoriteInfoImpl implements _FavoriteInfo {
-  const _$FavoriteInfoImpl({@JsonKey(name: 'user_name') this.userName});
+  const _$FavoriteInfoImpl(
+      {@JsonKey(name: 'user_id') this.userId,
+      @JsonKey(name: 'user_name') this.userName});
 
   factory _$FavoriteInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$FavoriteInfoImplFromJson(json);
 
-  /// The user's display name.
+  @override
+  @JsonKey(name: 'user_id')
+  final String? userId;
   @override
   @JsonKey(name: 'user_name')
   final String? userName;
 
   @override
   String toString() {
-    return 'FavoriteInfo(userName: $userName)';
+    return 'FavoriteInfo(userId: $userId, userName: $userName)';
   }
 
   @override
@@ -1535,13 +1554,14 @@ class _$FavoriteInfoImpl implements _FavoriteInfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FavoriteInfoImpl &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.userName, userName) ||
                 other.userName == userName));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, userName);
+  int get hashCode => Object.hash(runtimeType, userId, userName);
 
   /// Create a copy of FavoriteInfo
   /// with the given fields replaced by the non-null parameter values.
@@ -1561,13 +1581,15 @@ class _$FavoriteInfoImpl implements _FavoriteInfo {
 
 abstract class _FavoriteInfo implements FavoriteInfo {
   const factory _FavoriteInfo(
-          {@JsonKey(name: 'user_name') final String? userName}) =
-      _$FavoriteInfoImpl;
+      {@JsonKey(name: 'user_id') final String? userId,
+      @JsonKey(name: 'user_name') final String? userName}) = _$FavoriteInfoImpl;
 
   factory _FavoriteInfo.fromJson(Map<String, dynamic> json) =
       _$FavoriteInfoImpl.fromJson;
 
-  /// The user's display name.
+  @override
+  @JsonKey(name: 'user_id')
+  String? get userId;
   @override
   @JsonKey(name: 'user_name')
   String? get userName;
@@ -1705,12 +1727,13 @@ class __$$MachineWithFavoritesImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$MachineWithFavoritesImpl implements _MachineWithFavorites {
+class _$MachineWithFavoritesImpl extends _MachineWithFavorites {
   const _$MachineWithFavoritesImpl(
       {required this.machine,
       @JsonKey(name: 'favorited_by')
       final List<FavoriteInfo> favoritedBy = const []})
-      : _favoritedBy = favoritedBy;
+      : _favoritedBy = favoritedBy,
+        super._();
 
   factory _$MachineWithFavoritesImpl.fromJson(Map<String, dynamic> json) =>
       _$$MachineWithFavoritesImplFromJson(json);
@@ -1769,11 +1792,12 @@ class _$MachineWithFavoritesImpl implements _MachineWithFavorites {
   }
 }
 
-abstract class _MachineWithFavorites implements MachineWithFavorites {
+abstract class _MachineWithFavorites extends MachineWithFavorites {
   const factory _MachineWithFavorites(
       {required final Machine machine,
       @JsonKey(name: 'favorited_by')
       final List<FavoriteInfo> favoritedBy}) = _$MachineWithFavoritesImpl;
+  const _MachineWithFavorites._() : super._();
 
   factory _MachineWithFavorites.fromJson(Map<String, dynamic> json) =
       _$MachineWithFavoritesImpl.fromJson;

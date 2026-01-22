@@ -1,4 +1,5 @@
 /// Local high score models.
+library;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 

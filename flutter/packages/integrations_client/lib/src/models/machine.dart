@@ -1,4 +1,5 @@
 /// Pinball machine data models.
+library;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -120,7 +121,7 @@ class MachinesResponse with _$MachinesResponse {
 @freezed
 class FavoriteInfo with _$FavoriteInfo {
   const factory FavoriteInfo({
-    /// The user's display name.
+    @JsonKey(name: 'user_id') String? userId,
     @JsonKey(name: 'user_name') String? userName,
   }) = _FavoriteInfo;
 
@@ -128,9 +129,11 @@ class FavoriteInfo with _$FavoriteInfo {
       _$FavoriteInfoFromJson(json);
 }
 
-/// A machine with favorite information.
+/// A machine with favorites information.
 @freezed
 class MachineWithFavorites with _$MachineWithFavorites {
+  const MachineWithFavorites._();
+
   const factory MachineWithFavorites({
     /// The machine data.
     required Machine machine,
@@ -141,6 +144,22 @@ class MachineWithFavorites with _$MachineWithFavorites {
 
   factory MachineWithFavorites.fromJson(Map<String, dynamic> json) =>
       _$MachineWithFavoritesFromJson(json);
+
+  /// Check if a specific user has favorited this machine.
+  bool isFavoritedBy(String userId) =>
+      favoritedBy.any((f) => f.userId == userId);
+
+  /// Get the display text for the favorites badge.
+  /// Returns null if no favorites.
+  String? get favoritesBadgeText {
+    if (favoritedBy.isEmpty) return null;
+    final first = favoritedBy.first;
+    final name = first.userName ?? 'Someone';
+    if (favoritedBy.length == 1) {
+      return "$name's favorite";
+    }
+    return "$name's favorite +${favoritedBy.length - 1}";
+  }
 }
 
 /// Response containing multiple machines with favorites.
