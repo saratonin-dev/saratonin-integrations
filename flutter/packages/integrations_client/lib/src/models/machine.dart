@@ -121,7 +121,7 @@ class MachinesResponse with _$MachinesResponse {
 @freezed
 class FavoriteInfo with _$FavoriteInfo {
   const factory FavoriteInfo({
-    @JsonKey(name: 'user_id') required String userId,
+    @JsonKey(name: 'user_id') String? userId,
     @JsonKey(name: 'user_name') String? userName,
   }) = _FavoriteInfo;
 
@@ -135,44 +135,8 @@ class MachineWithFavorites with _$MachineWithFavorites {
   const MachineWithFavorites._();
 
   const factory MachineWithFavorites({
-    /// Unique identifier (e.g., "pm_12345" for Pinball Map sourced machines).
-    required String id,
-
-    /// Machine name.
-    required String name,
-
-    /// Manufacturer (e.g., "Williams", "Stern").
-    String? manufacturer,
-
-    /// Year of manufacture.
-    int? year,
-
-    /// IPDB link.
-    @JsonKey(name: 'ipdb_link') String? ipdbLink,
-
-    /// OPDB ID for enrichment lookup.
-    @JsonKey(name: 'opdb_id') String? opdbId,
-
-    /// Machine type (e.g., "Solid State", "Electromechanical").
-    @JsonKey(name: 'machine_type') String? machineType,
-
-    /// Display type (e.g., "DMD", "LCD", "Alphanumeric").
-    @JsonKey(name: 'display_type') String? displayType,
-
-    /// Number of players.
-    @JsonKey(name: 'player_count') int? playerCount,
-
-    /// Features (e.g., "multiball", "video_mode").
-    @Default([]) List<String> features,
-
-    /// Description from OPDB.
-    String? description,
-
-    /// Images from OPDB.
-    @Default([]) List<MachineImage> images,
-
-    /// Strategy tips from Pintips/Pinball Primer.
-    Pintips? tips,
+    /// The machine data.
+    required Machine machine,
 
     /// Users who have favorited this machine.
     @JsonKey(name: 'favorited_by') @Default([]) List<FavoriteInfo> favoritedBy,
@@ -196,23 +160,6 @@ class MachineWithFavorites with _$MachineWithFavorites {
     }
     return "$name's favorite +${favoritedBy.length - 1}";
   }
-
-  /// Get a Machine object from this MachineWithFavorites.
-  Machine get machine => Machine(
-        id: id,
-        name: name,
-        manufacturer: manufacturer,
-        year: year,
-        ipdbLink: ipdbLink,
-        opdbId: opdbId,
-        machineType: machineType,
-        displayType: displayType,
-        playerCount: playerCount,
-        features: features,
-        description: description,
-        images: images,
-        tips: tips,
-      );
 }
 
 /// Response containing multiple machines with favorites.
@@ -221,7 +168,6 @@ class MachinesWithFavoritesResponse with _$MachinesWithFavoritesResponse {
   const factory MachinesWithFavoritesResponse({
     required List<MachineWithFavorites> machines,
     @JsonKey(name: 'machine_count') required int machineCount,
-    @JsonKey(name: 'last_synced') DateTime? lastSynced,
   }) = _MachinesWithFavoritesResponse;
 
   factory MachinesWithFavoritesResponse.fromJson(Map<String, dynamic> json) =>

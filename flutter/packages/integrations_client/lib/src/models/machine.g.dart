@@ -123,7 +123,7 @@ Map<String, dynamic> _$$MachinesResponseImplToJson(
 
 _$FavoriteInfoImpl _$$FavoriteInfoImplFromJson(Map<String, dynamic> json) =>
     _$FavoriteInfoImpl(
-      userId: json['user_id'] as String,
+      userId: json['user_id'] as String?,
       userName: json['user_name'] as String?,
     );
 
@@ -136,27 +136,7 @@ Map<String, dynamic> _$$FavoriteInfoImplToJson(_$FavoriteInfoImpl instance) =>
 _$MachineWithFavoritesImpl _$$MachineWithFavoritesImplFromJson(
         Map<String, dynamic> json) =>
     _$MachineWithFavoritesImpl(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      manufacturer: json['manufacturer'] as String?,
-      year: (json['year'] as num?)?.toInt(),
-      ipdbLink: json['ipdb_link'] as String?,
-      opdbId: json['opdb_id'] as String?,
-      machineType: json['machine_type'] as String?,
-      displayType: json['display_type'] as String?,
-      playerCount: (json['player_count'] as num?)?.toInt(),
-      features: (json['features'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
-      description: json['description'] as String?,
-      images: (json['images'] as List<dynamic>?)
-              ?.map((e) => MachineImage.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
-      tips: json['tips'] == null
-          ? null
-          : Pintips.fromJson(json['tips'] as Map<String, dynamic>),
+      machine: Machine.fromJson(json['machine'] as Map<String, dynamic>),
       favoritedBy: (json['favorited_by'] as List<dynamic>?)
               ?.map((e) => FavoriteInfo.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -166,19 +146,7 @@ _$MachineWithFavoritesImpl _$$MachineWithFavoritesImplFromJson(
 Map<String, dynamic> _$$MachineWithFavoritesImplToJson(
         _$MachineWithFavoritesImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'manufacturer': instance.manufacturer,
-      'year': instance.year,
-      'ipdb_link': instance.ipdbLink,
-      'opdb_id': instance.opdbId,
-      'machine_type': instance.machineType,
-      'display_type': instance.displayType,
-      'player_count': instance.playerCount,
-      'features': instance.features,
-      'description': instance.description,
-      'images': instance.images,
-      'tips': instance.tips,
+      'machine': instance.machine,
       'favorited_by': instance.favoritedBy,
     };
 
@@ -190,9 +158,6 @@ _$MachinesWithFavoritesResponseImpl
                   MachineWithFavorites.fromJson(e as Map<String, dynamic>))
               .toList(),
           machineCount: (json['machine_count'] as num).toInt(),
-          lastSynced: json['last_synced'] == null
-              ? null
-              : DateTime.parse(json['last_synced'] as String),
         );
 
 Map<String, dynamic> _$$MachinesWithFavoritesResponseImplToJson(
@@ -200,5 +165,4 @@ Map<String, dynamic> _$$MachinesWithFavoritesResponseImplToJson(
     <String, dynamic>{
       'machines': instance.machines,
       'machine_count': instance.machineCount,
-      'last_synced': instance.lastSynced?.toIso8601String(),
     };
