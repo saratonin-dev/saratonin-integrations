@@ -116,51 +116,27 @@ class MachinesResponse with _$MachinesResponse {
       _$MachinesResponseFromJson(json);
 }
 
-/// A machine with favorite count information.
+/// Information about a user who favorited a machine.
+@freezed
+class FavoriteInfo with _$FavoriteInfo {
+  const factory FavoriteInfo({
+    /// The user's display name.
+    @JsonKey(name: 'user_name') String? userName,
+  }) = _FavoriteInfo;
+
+  factory FavoriteInfo.fromJson(Map<String, dynamic> json) =>
+      _$FavoriteInfoFromJson(json);
+}
+
+/// A machine with favorite information.
 @freezed
 class MachineWithFavorites with _$MachineWithFavorites {
   const factory MachineWithFavorites({
-    /// Unique identifier.
-    required String id,
+    /// The machine data.
+    required Machine machine,
 
-    /// Machine name.
-    required String name,
-
-    /// Manufacturer.
-    String? manufacturer,
-
-    /// Year of manufacture.
-    int? year,
-
-    /// IPDB link.
-    @JsonKey(name: 'ipdb_link') String? ipdbLink,
-
-    /// OPDB ID.
-    @JsonKey(name: 'opdb_id') String? opdbId,
-
-    /// Machine type.
-    @JsonKey(name: 'machine_type') String? machineType,
-
-    /// Display type.
-    @JsonKey(name: 'display_type') String? displayType,
-
-    /// Number of players.
-    @JsonKey(name: 'player_count') int? playerCount,
-
-    /// Features.
-    @Default([]) List<String> features,
-
-    /// Description.
-    String? description,
-
-    /// Images.
-    @Default([]) List<MachineImage> images,
-
-    /// Strategy tips.
-    Pintips? tips,
-
-    /// Number of users who favorited this machine.
-    @JsonKey(name: 'favorite_count') @Default(0) int favoriteCount,
+    /// Users who have favorited this machine.
+    @JsonKey(name: 'favorited_by') @Default([]) List<FavoriteInfo> favoritedBy,
   }) = _MachineWithFavorites;
 
   factory MachineWithFavorites.fromJson(Map<String, dynamic> json) =>

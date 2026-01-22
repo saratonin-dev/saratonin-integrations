@@ -9,9 +9,14 @@ part of 'auth.dart';
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       id: json['id'] as String,
       phone: json['phone'] as String,
+      name: json['name'] as String?,
       roles:
           (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               const [],
+      permissions: (json['permissions'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 
@@ -19,7 +24,9 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'phone': instance.phone,
+      'name': instance.name,
       'roles': instance.roles,
+      'permissions': instance.permissions,
       'created_at': instance.createdAt.toIso8601String(),
     };
 

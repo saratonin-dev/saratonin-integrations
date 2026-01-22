@@ -121,50 +121,31 @@ Map<String, dynamic> _$$MachinesResponseImplToJson(
       'last_synced': instance.lastSynced?.toIso8601String(),
     };
 
+_$FavoriteInfoImpl _$$FavoriteInfoImplFromJson(Map<String, dynamic> json) =>
+    _$FavoriteInfoImpl(
+      userName: json['user_name'] as String?,
+    );
+
+Map<String, dynamic> _$$FavoriteInfoImplToJson(_$FavoriteInfoImpl instance) =>
+    <String, dynamic>{
+      'user_name': instance.userName,
+    };
+
 _$MachineWithFavoritesImpl _$$MachineWithFavoritesImplFromJson(
         Map<String, dynamic> json) =>
     _$MachineWithFavoritesImpl(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      manufacturer: json['manufacturer'] as String?,
-      year: (json['year'] as num?)?.toInt(),
-      ipdbLink: json['ipdb_link'] as String?,
-      opdbId: json['opdb_id'] as String?,
-      machineType: json['machine_type'] as String?,
-      displayType: json['display_type'] as String?,
-      playerCount: (json['player_count'] as num?)?.toInt(),
-      features: (json['features'] as List<dynamic>?)
-              ?.map((e) => e as String)
+      machine: Machine.fromJson(json['machine'] as Map<String, dynamic>),
+      favoritedBy: (json['favorited_by'] as List<dynamic>?)
+              ?.map((e) => FavoriteInfo.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      description: json['description'] as String?,
-      images: (json['images'] as List<dynamic>?)
-              ?.map((e) => MachineImage.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          const [],
-      tips: json['tips'] == null
-          ? null
-          : Pintips.fromJson(json['tips'] as Map<String, dynamic>),
-      favoriteCount: (json['favorite_count'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$MachineWithFavoritesImplToJson(
         _$MachineWithFavoritesImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'manufacturer': instance.manufacturer,
-      'year': instance.year,
-      'ipdb_link': instance.ipdbLink,
-      'opdb_id': instance.opdbId,
-      'machine_type': instance.machineType,
-      'display_type': instance.displayType,
-      'player_count': instance.playerCount,
-      'features': instance.features,
-      'description': instance.description,
-      'images': instance.images,
-      'tips': instance.tips,
-      'favorite_count': instance.favoriteCount,
+      'machine': instance.machine,
+      'favorited_by': instance.favoritedBy,
     };
 
 _$MachinesWithFavoritesResponseImpl

@@ -8,14 +8,21 @@ part 'auth.g.dart';
 /// User profile.
 @freezed
 class User with _$User {
+  const User._();
+
   const factory User({
     required String id,
     required String phone,
+    String? name,
     @Default([]) List<String> roles,
+    @Default([]) List<String> permissions,
     @JsonKey(name: 'created_at') required DateTime createdAt,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  /// Whether the user can favorite machines.
+  bool get canFavorite => permissions.contains('machines:favorite');
 }
 
 /// Team member representation.

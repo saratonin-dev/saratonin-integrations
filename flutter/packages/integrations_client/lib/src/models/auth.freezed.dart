@@ -22,7 +22,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
 mixin _$User {
   String get id => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   List<String> get roles => throw _privateConstructorUsedError;
+  List<String> get permissions => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
 
@@ -43,7 +45,9 @@ abstract class $UserCopyWith<$Res> {
   $Res call(
       {String id,
       String phone,
+      String? name,
       List<String> roles,
+      List<String> permissions,
       @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
@@ -64,7 +68,9 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   $Res call({
     Object? id = null,
     Object? phone = null,
+    Object? name = freezed,
     Object? roles = null,
+    Object? permissions = null,
     Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
@@ -76,9 +82,17 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
       roles: null == roles
           ? _value.roles
           : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      permissions: null == permissions
+          ? _value.permissions
+          : permissions // ignore: cast_nullable_to_non_nullable
               as List<String>,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -98,7 +112,9 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   $Res call(
       {String id,
       String phone,
+      String? name,
       List<String> roles,
+      List<String> permissions,
       @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
@@ -116,7 +132,9 @@ class __$$UserImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? phone = null,
+    Object? name = freezed,
     Object? roles = null,
+    Object? permissions = null,
     Object? createdAt = null,
   }) {
     return _then(_$UserImpl(
@@ -128,9 +146,17 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
       roles: null == roles
           ? _value._roles
           : roles // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      permissions: null == permissions
+          ? _value._permissions
+          : permissions // ignore: cast_nullable_to_non_nullable
               as List<String>,
       createdAt: null == createdAt
           ? _value.createdAt
@@ -142,13 +168,17 @@ class __$$UserImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UserImpl implements _User {
+class _$UserImpl extends _User {
   const _$UserImpl(
       {required this.id,
       required this.phone,
+      this.name,
       final List<String> roles = const [],
+      final List<String> permissions = const [],
       @JsonKey(name: 'created_at') required this.createdAt})
-      : _roles = roles;
+      : _roles = roles,
+        _permissions = permissions,
+        super._();
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -157,6 +187,8 @@ class _$UserImpl implements _User {
   final String id;
   @override
   final String phone;
+  @override
+  final String? name;
   final List<String> _roles;
   @override
   @JsonKey()
@@ -166,13 +198,22 @@ class _$UserImpl implements _User {
     return EqualUnmodifiableListView(_roles);
   }
 
+  final List<String> _permissions;
+  @override
+  @JsonKey()
+  List<String> get permissions {
+    if (_permissions is EqualUnmodifiableListView) return _permissions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_permissions);
+  }
+
   @override
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
 
   @override
   String toString() {
-    return 'User(id: $id, phone: $phone, roles: $roles, createdAt: $createdAt)';
+    return 'User(id: $id, phone: $phone, name: $name, roles: $roles, permissions: $permissions, createdAt: $createdAt)';
   }
 
   @override
@@ -182,15 +223,24 @@ class _$UserImpl implements _User {
             other is _$UserImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._roles, _roles) &&
+            const DeepCollectionEquality()
+                .equals(other._permissions, _permissions) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, phone,
-      const DeepCollectionEquality().hash(_roles), createdAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      phone,
+      name,
+      const DeepCollectionEquality().hash(_roles),
+      const DeepCollectionEquality().hash(_permissions),
+      createdAt);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -208,13 +258,16 @@ class _$UserImpl implements _User {
   }
 }
 
-abstract class _User implements User {
+abstract class _User extends User {
   const factory _User(
           {required final String id,
           required final String phone,
+          final String? name,
           final List<String> roles,
+          final List<String> permissions,
           @JsonKey(name: 'created_at') required final DateTime createdAt}) =
       _$UserImpl;
+  const _User._() : super._();
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -223,7 +276,11 @@ abstract class _User implements User {
   @override
   String get phone;
   @override
+  String? get name;
+  @override
   List<String> get roles;
+  @override
+  List<String> get permissions;
   @override
   @JsonKey(name: 'created_at')
   DateTime get createdAt;
