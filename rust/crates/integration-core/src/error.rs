@@ -15,9 +15,7 @@ pub enum IntegrationError {
 
     /// Rate limit exceeded.
     #[error("Rate limited, retry after {retry_after_secs:?} seconds")]
-    RateLimited {
-        retry_after_secs: Option<u64>,
-    },
+    RateLimited { retry_after_secs: Option<u64> },
 
     /// Authentication failed.
     #[error("Authentication failed: {0}")]
@@ -37,10 +35,7 @@ pub enum IntegrationError {
 
     /// Generic API error.
     #[error("API error ({status}): {message}")]
-    Api {
-        status: u16,
-        message: String,
-    },
+    Api { status: u16, message: String },
 }
 
 impl IntegrationError {
@@ -59,7 +54,9 @@ impl IntegrationError {
         match status {
             401 | 403 => IntegrationError::AuthFailed(message.into()),
             404 => IntegrationError::NotFound(message.into()),
-            429 => IntegrationError::RateLimited { retry_after_secs: None },
+            429 => IntegrationError::RateLimited {
+                retry_after_secs: None,
+            },
             503 => IntegrationError::ServiceUnavailable(message.into()),
             _ => IntegrationError::Api {
                 status,

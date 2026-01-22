@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR/rust\" && cargo fmt --quiet 2>/dev/null; cd \"$CLAUDE_PROJECT_DIR/flutter/packages/integrations_client\" && dart format . --quiet 2>/dev/null; exit 0",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file_path=$(jq -r '.tool_input.file_path // empty'); if [ -n \"$file_path\" ] && echo \"$file_path\" | grep -qE '(\\.env|\\.env\\.|Cargo\\.lock|pubspec\\.lock|\\.git/)'; then echo \"Blocked: Cannot modify $file_path\" >&2; exit 2; fi; exit 0",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

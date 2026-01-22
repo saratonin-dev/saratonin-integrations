@@ -52,7 +52,11 @@ impl OtpService for MockOtpService {
         Ok(())
     }
 
-    async fn check_verification(&self, phone: &str, code: &str) -> Result<VerificationStatus, SmsError> {
+    async fn check_verification(
+        &self,
+        phone: &str,
+        code: &str,
+    ) -> Result<VerificationStatus, SmsError> {
         let stored_code = {
             let codes = self.pending_codes.lock();
             codes.get(phone).cloned()

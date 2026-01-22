@@ -83,7 +83,10 @@ impl PinballMapClient {
 
         // Get raw text first for debugging
         let text = response.text().await?;
-        debug!(response_length = text.len(), "Received response from Pinball Map");
+        debug!(
+            response_length = text.len(),
+            "Received response from Pinball Map"
+        );
 
         let data: PinballMapResponse = serde_json::from_str(&text).map_err(|e| {
             debug!(error = %e, body_preview = &text[..text.len().min(500)], "Failed to parse Pinball Map response");

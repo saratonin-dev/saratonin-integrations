@@ -105,16 +105,8 @@ struct ApnsAlert {
 
 #[async_trait]
 impl PushService for ApnsPushService {
-    async fn send(
-        &self,
-        device_token: &str,
-        notification: &Notification,
-    ) -> Result<(), PushError> {
-        let url = format!(
-            "{}/3/device/{}",
-            self.config.host(),
-            device_token
-        );
+    async fn send(&self, device_token: &str, notification: &Notification) -> Result<(), PushError> {
+        let url = format!("{}/3/device/{}", self.config.host(), device_token);
 
         let payload = ApnsPayload {
             aps: ApnsAps {

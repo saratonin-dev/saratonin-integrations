@@ -23,11 +23,7 @@ impl Default for MockPushService {
 
 #[async_trait]
 impl PushService for MockPushService {
-    async fn send(
-        &self,
-        device_token: &str,
-        notification: &Notification,
-    ) -> Result<(), PushError> {
+    async fn send(&self, device_token: &str, notification: &Notification) -> Result<(), PushError> {
         info!(
             device_token,
             title = notification.title,
@@ -38,9 +34,18 @@ impl PushService for MockPushService {
         println!("\n╔════════════════════════════════════════╗");
         println!("║         MOCK PUSH NOTIFICATION         ║");
         println!("╠════════════════════════════════════════╣");
-        println!("║ To: {:<33} ║", &device_token[..device_token.len().min(33)]);
-        println!("║ Title: {:<30} ║", &notification.title[..notification.title.len().min(30)]);
-        println!("║ Body: {:<31} ║", &notification.body[..notification.body.len().min(31)]);
+        println!(
+            "║ To: {:<33} ║",
+            &device_token[..device_token.len().min(33)]
+        );
+        println!(
+            "║ Title: {:<30} ║",
+            &notification.title[..notification.title.len().min(30)]
+        );
+        println!(
+            "║ Body: {:<31} ║",
+            &notification.body[..notification.body.len().min(31)]
+        );
         println!("╚════════════════════════════════════════╝\n");
 
         Ok(())

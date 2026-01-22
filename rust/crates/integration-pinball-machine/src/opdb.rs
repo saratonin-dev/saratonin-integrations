@@ -51,7 +51,12 @@ impl OpdbMachine {
             display_type: self.display_type.clone(),
             player_count: self.player_count,
             features: self.features.clone(),
-            description: if self.description.as_ref().map(|s| s.is_empty()).unwrap_or(true) {
+            description: if self
+                .description
+                .as_ref()
+                .map(|s| s.is_empty())
+                .unwrap_or(true)
+            {
                 None
             } else {
                 self.description.clone()
@@ -62,9 +67,15 @@ impl OpdbMachine {
                 .filter_map(|img| {
                     // Get the large URL, or medium, or small
                     let url = img.urls.as_ref().and_then(|urls| {
-                        urls.large.clone().or(urls.medium.clone()).or(urls.small.clone())
+                        urls.large
+                            .clone()
+                            .or(urls.medium.clone())
+                            .or(urls.small.clone())
                     })?;
-                    let size = img.sizes.as_ref().and_then(|s| s.large.as_ref().or(s.medium.as_ref()));
+                    let size = img
+                        .sizes
+                        .as_ref()
+                        .and_then(|s| s.large.as_ref().or(s.medium.as_ref()));
                     Some(MachineImage {
                         url,
                         image_type: img.image_type.clone(),
@@ -201,7 +212,10 @@ impl OpdbLoader {
     }
 
     /// Look up enrichment data by OPDB ID.
-    pub async fn lookup_by_opdb_id(&self, opdb_id: &str) -> Result<Option<MachineEnrichment>, MachineError> {
+    pub async fn lookup_by_opdb_id(
+        &self,
+        opdb_id: &str,
+    ) -> Result<Option<MachineEnrichment>, MachineError> {
         let cache = self.get_cache().await?;
         let cache = cache.read().await;
 
@@ -220,7 +234,10 @@ impl OpdbLoader {
     }
 
     /// Look up enrichment data by IPDB ID.
-    pub async fn lookup_by_ipdb_id(&self, ipdb_id: i64) -> Result<Option<MachineEnrichment>, MachineError> {
+    pub async fn lookup_by_ipdb_id(
+        &self,
+        ipdb_id: i64,
+    ) -> Result<Option<MachineEnrichment>, MachineError> {
         let cache = self.get_cache().await?;
         let cache = cache.read().await;
 
@@ -338,9 +355,9 @@ impl OpdbLoader {
             .modified()
             .ok()
             .and_then(|t| {
-                t.duration_since(std::time::UNIX_EPOCH)
-                    .ok()
-                    .map(|d| DateTime::from_timestamp(d.as_secs() as i64, 0).unwrap_or_else(Utc::now))
+                t.duration_since(std::time::UNIX_EPOCH).ok().map(|d| {
+                    DateTime::from_timestamp(d.as_secs() as i64, 0).unwrap_or_else(Utc::now)
+                })
             })
             .unwrap_or_else(Utc::now);
 
