@@ -23,12 +23,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.1
 
+      # Detect linked feature branches in saratonin-core
+      - name: Detect linked branches
+        id: linked
+        run: |
+          BRANCH="${{ github.head_ref || github.event.client_payload.branch || 'develop' }}"
+          CORE_REF=$(gh api repos/${{ github.repository_owner }}/saratonin-core/branches/$BRANCH --jq '.name' 2>/dev/null || echo "develop")
+          echo "core_ref=$CORE_REF" >> $GITHUB_OUTPUT
+
       # Checkout saratonin-core at the triggering commit (or develop)
       - name: Checkout saratonin-core
         uses: actions/checkout@v4.1.1
         with:
           repository: ${{ github.repository_owner }}/saratonin-core
-          ref: ${{ github.event.client_payload.ref || 'develop' }}
+          ref: ${{ steps.linked.outputs.core_ref }}
           path: saratonin-core
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
 
@@ -67,12 +75,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.1
 
+      # Detect linked feature branches in saratonin-core
+      - name: Detect linked branches
+        id: linked
+        run: |
+          BRANCH="${{ github.head_ref || github.event.client_payload.branch || 'develop' }}"
+          CORE_REF=$(gh api repos/${{ github.repository_owner }}/saratonin-core/branches/$BRANCH --jq '.name' 2>/dev/null || echo "develop")
+          echo "core_ref=$CORE_REF" >> $GITHUB_OUTPUT
+
       # Checkout saratonin-core for Flutter packages
       - name: Checkout saratonin-core
         uses: actions/checkout@v4.1.1
         with:
           repository: ${{ github.repository_owner }}/saratonin-core
-          ref: ${{ github.event.client_payload.ref || 'develop' }}
+          ref: ${{ steps.linked.outputs.core_ref }}
           path: saratonin-core
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
 
