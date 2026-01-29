@@ -8,13 +8,19 @@
 
 mod client;
 mod error;
+pub mod matchplay_users;
 mod models;
 mod service;
 
 pub use client::{MatchplayClient, MatchplayConfig};
 pub use error::LeagueError;
+pub use matchplay_users::MatchplayUser;
 pub use models::*;
 pub use service::LeagueDataService;
+
+pub async fn run_migrations(pool: &sqlx::PgPool) -> Result<(), sqlx::migrate::MigrateError> {
+    sqlx::migrate!("./migrations").run(pool).await
+}
 
 #[cfg(test)]
 mod tests {
