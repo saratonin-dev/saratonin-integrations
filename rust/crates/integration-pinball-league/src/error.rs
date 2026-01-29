@@ -32,4 +32,8 @@ pub enum LeagueError {
     /// JSON parse error.
     #[error("JSON error: {0}")]
     Json(#[from] serde_json::Error),
+
+    /// Database error.
+    #[error("Database error: {0}")]
+    Database(String),
 }
